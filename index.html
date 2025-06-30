@@ -482,7 +482,12 @@
             
             container.innerHTML = '';
             
-            Object.keys(groupedTasks).forEach(day => {
+            // 今日を最初に表示
+            const dayOrder = [todayDayName, ...Object.keys(groupedTasks).filter(day => day !== todayDayName)];
+            
+            dayOrder.forEach(day => {
+                if (!groupedTasks[day]) return;
+                
                 const isToday = day === todayDayName;
                 const dayTasks = groupedTasks[day];
                 const completedInDay = dayTasks.filter(task => completedTasks[task.index]).length;
