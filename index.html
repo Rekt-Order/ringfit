@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>リングフィット運動計画タイムテーブル</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f5f5f5;
+        }
+        
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        
+        th {
+            background-color: #4CAF50;
+            color: white;
+            padding: 12px;
+            text-align: left;
+            font-weight: bold;
+            border: 1px solid #ddd;
+        }
+        
+        td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            vertical-align: top;
+        }
+        
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        
+        tr:hover {
+            background-color: #f5f5f5;
+        }
+        
+        .weekday {
+            font-weight: bold;
+            color: #2196F3;
+        }
+        
+        .time {
+            font-weight: bold;
+            color: #FF9800;
+        }
+        
+        .mode-aerobic {
+            background-color: #e8f5e8;
+            color: #2e7d32;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.9em;
+        }
+        
+        .mode-strength {
+            background-color: #fff3e0;
+            color: #f57c00;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.9em;
+        }
+        
+        .mode-stretch {
+            background-color: #fce4ec;
+            color: #c2185b;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.9em;
+        }
+        
+        .mode-none {
+            color: #666;
+            font-style: italic;
+        }
+        
+        .point {
+            font-size: 0.9em;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>1週間のリングフィット運動計画タイムテーブル</h1>
+        
+        <table>
+            <thead>
+                <tr>
+                    <th>曜日</th>
+                    <th>時間帯</th>
+                    <th>活動内容</th>
+                    <th>リングフィットモード</th>
+                    <th>ポイント</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- 月曜日 -->
+                <tr>
+                    <td class="weekday">月</td>
+                    <td class="time">16:45-17:00</td>
+                    <td>仕事片付け</td>
+                    <td><span class="mode-none">なし</span></td>
+                    <td class="point">夕食前の準備</td>
+                </tr>
+                <tr>
+                    <td class="weekday">月</td>
+                    <td class="time">17:00-17:10</td>
+                    <td>着替え・水分補給</td>
+                    <td><span class="mode-none">なし</span></td>
+                    <td class="point">運動前の準備</td>
+                </tr>
+                <tr>
+                    <td class="weekday">月</td>
+                    <td class="time">17:10-17:40</td>
+                    <td>リングフィット有酸素モード</td>
+                    <td><span class="mode-aerobic">有酸素</span></td>
+                    <td class="point">アドベンチャー1-2ステージ（ジョギング多めルート）</td>
+                </tr>
+                <tr>
+                    <td class="weekday">月</td>
+                    <td class="time">17:40-17:45</td>
+                    <td>クールダウン</td>
+                    <td><span class="mode-none">なし</span></td>
+                    <td class="point">軽いストレッチ</td>
+                </tr>
+                <tr>
+                    <td class="weekday">月</td>
+                    <td class="time">17:45-18:30</td>
+                    <td>夕食</td>
+                    <td><span class="mode-none">なし</span></td>
+                    <td class="point">食前運動で食欲抑制</td>
+                </tr>
+                
+                <!-- 火曜日 -->
+                <tr>
+                    <td class="weekday">火</td>
+                    <td class="time">17:30-18:30</td>
+                    <td>夕食</td>
+                    <td><span class="mode-none">なし</span></td>
+                    <td class="point">食事タイム</td>
+                </tr>
+                <tr>
+                    <td class="weekday">火</td>
+                    <td class="time">18:30-19:45</td>
+                    <td>休憩・消化タイム</td>
+                    <td><span class="mode-none">なし</span></td>
+                    <td class="point">食後1時間以上空ける</td>
+                </tr>
+                <tr>
+                    <td class="weekday">火</td>
+                    <td class="time">19:45-19:55</td>
+                    <td>着替え・水分補給</td>
+                    <td><span class="mode-none">なし</span></td>
+                    <td class="point">運動前の準備</td>
+                </tr>
+                <tr>
+                    <td class="weekday">火</td>
+                    <td class="time">19:55-20:25</td>
+                    <td>リングフィット筋トレモード</td>
+                    <td><span class="mode-strength">筋トレ</span></td>
+                    <td class="point">スクワット/バンザイプッシュ/プランク/腹筋ガード各2セット</td>
+                </tr>
+                <tr>
+                    <td class="weekday">火</td>
+                    <td class="time">20:25-20:30</td>
+                    <td>クールダウン</td>
+                    <td><span class="mode-none">なし</span></td>
+                    <td class="point">軽いストレッチ</td>
+                </tr>
+                
+                <!-- 水曜日 -->
+                <tr>
+                    <td class="weekday">水</td>
+                    <td class="time">16:45-17:00</td>
+                    <td>仕事片付け</td>
+                    <td><span class="mode-none">なし</span></td>
+                    <td class="point">夕食前の準備</td>
+                </tr>
+                <tr>
+                    <td class="weekday">水</td>
+                    <td class="time">17:00-17:10</td>
+                    <td>着替え・水分補給</td>
+                    <td><span class="mode-none">なし</span></td>
+                    <td class="point">運動前の準備</td>
+                </tr>
+                <tr>
+                    <td class="weekday">水</td>
+                    <td class="time">17:10-17:40</td>
+                    <td>リングフィット有酸素モード</td>
+                    <td><span class="mode-aerobic">有酸素</span></td>
+                    <td class="point">アドベンチャー1-2ステージ（ジョギング多めルート）</td>
+                </tr>
+                <tr>
+                    <td class="weekday">水</td>
+                    <td class="time">17:40-17:45</td>
+                    <td>クールダウン</td>
+                    <td><span class="mode-none">なし</span></td>
+                    <td class="point">軽いストレッチ</td>
+                </tr>
+                <tr>
+                    <td class="weekday">水</td>
+                    <td class="time">17:45-18:30</td>
+                    <td>夕食</td>
+                    <td><span class="mode-none">なし</span></td>
+                    <td class="point">食前運動で食欲抑制</td>
+                </tr>
+                
+                <!-- 木曜日 -->
+                <tr>
+                    <td class="weekday">木</td>
+                    <td class="time">17:30-18:30</td>
+                    <td>夕食</td>
+                    <td><span class="mode-none">なし</span></td>
+                    <td class="point">食事タイム</td>
+                </tr>
+                <tr>
+                    <td class="weekday">木</td>
+                    <td class="time">18:30-19:45</td>
+                    <td>休憩・消化タイム</td>
+                    <td><span class="mode-none">なし</span></td>
+                    <td class="point">食後1時間以上空ける</td>
+                </tr>
+                <tr>
+                    <td class="weekday">木</td>
+                    <td class="time">19:45-19:55</td>
+                    <td>着替え・水分補給</td>
+                    <td><span class="mode-none">なし</span></td>
+                    <td class="point">運動前の準備</td>
+                </tr>
+                <tr>
+                    <td class="weekday">木</td>
+                    <td class="time">19:55-20:25</td>
+                    <td>リングフィット筋トレモード</td>
+                    <td><span class="mode-strength">筋トレ</span></td>
+                    <td class="point">スクワット/バンザイプッシュ/プランク/腹筋ガード各2セット</td>
+                </tr>
+                <tr>
+                    <td class="weekday">木</td>
+                    <td class="time">20:25-20:30</td>
+                    <td>クールダウン</td>
+                    <td><span class="mode-none">なし</span></td>
+                    <td class="point">軽いストレッチ</td>
+                </tr>
+                
+                <!-- 金曜日 -->
+                <tr>
+                    <td class="weekday">金</td>
+                    <td class="time">16:45-17:00</td>
+                    <td>仕事片付け</td>
+                    <td><span class="mode-none">なし</span></td>
+                    <td class="point">夕食前の準備</td>
+                </tr>
+                <tr>
+                    <td class="weekday">金</td>
+                    <td class="time">17:00-17:10</td>
+                    <td>着替え・水分補給</td>
+                    <td><span class="mode-none">なし</span></td>
+                    <td class="point">運動前の準備</td>
+                </tr>
+                <tr>
+                    <td class="weekday">金</td>
+                    <td class="time">17:10-17:40</td>
+                    <td>リングフィット有酸素モード</td>
+                    <td><span class="mode-aerobic">有酸素</span></td>
+                    <td class="point">アドベンチャー1-2ステージ（ジョギング多めルート）</td>
+                </tr>
+                <tr>
+                    <td class="weekday">金</td>
+                    <td class="time">17:40-17:45</td>
+                    <td>クールダウン</td>
+                    <td><span class="mode-none">なし</span></td>
+                    <td class="point">軽いストレッチ</td>
+                </tr>
+                <tr>
+                    <td class="weekday">金</td>
+                    <td class="time">17:45-18:30</td>
+                    <td>夕食</td>
+                    <td><span class="mode-none">なし</span></td>
+                    <td class="point">食前運動で食欲抑制</td>
+                </tr>
+                
+                <!-- 土曜日 -->
+                <tr>
+                    <td class="weekday">土</td>
+                    <td class="time">好きな時間</td>
+                    <td>5分ストレッチ</td>
+                    <td><span class="mode-stretch">ストレッチ</span></td>
+                    <td class="point">上体伸ばし、体側、前屈、キャット＆カウ、太もも、リングコン胸開き</td>
+                </tr>
+                
+                <!-- 日曜日 -->
+                <tr>
+                    <td class="weekday">日</td>
+                    <td class="time">なし</td>
+                    <td>休養日</td>
+                    <td><span class="mode-none">なし</span></td>
+                    <td class="point">完全オフ</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
