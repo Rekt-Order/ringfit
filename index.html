@@ -3,322 +3,622 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>リングフィット運動計画タイムテーブル</title>
+    <title>リングフィット タスク管理アプリ</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-            background-color: #f5f5f5;
-        }
-        
-        h1 {
-            color: #333;
-            text-align: center;
-            margin-bottom: 30px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
         }
         
         .container {
             max-width: 1200px;
             margin: 0 auto;
-            background-color: white;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            margin: 0 0 10px 0;
+            font-size: 2.5em;
+        }
+        
+        .header p {
+            margin: 0;
+            opacity: 0.9;
+        }
+        
+        .controls {
+            padding: 20px 30px;
+            background: #f8f9fa;
+            border-bottom: 1px solid #dee2e6;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        
+        .progress-bar {
+            flex: 1;
+            min-width: 200px;
+        }
+        
+        .progress-bar label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #495057;
+        }
+        
+        .progress {
+            width: 100%;
+            height: 25px;
+            background: #e9ecef;
+            border-radius: 15px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #4CAF50, #45a049);
+            transition: width 0.3s ease;
+            border-radius: 15px;
+        }
+        
+        .progress-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #495057;
+            font-weight: bold;
+            font-size: 12px;
+        }
+        
+        .buttons {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-reset {
+            background: #dc3545;
+            color: white;
+        }
+        
+        .btn-reset:hover {
+            background: #c82333;
+        }
+        
+        .btn-week-reset {
+            background: #fd7e14;
+            color: white;
+        }
+        
+        .btn-week-reset:hover {
+            background: #e66300;
+        }
+        
+        .content {
+            padding: 30px;
+        }
+        
+        .day-section {
+            margin-bottom: 30px;
+            border: 1px solid #dee2e6;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        
+        .day-header {
+            background: linear-gradient(135deg, #6c757d 0%, #5a6268 100%);
+            color: white;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .day-title {
+            font-size: 1.3em;
+            font-weight: bold;
+        }
+        
+        .day-progress {
+            font-size: 0.9em;
+            opacity: 0.9;
+        }
+        
+        .task-list {
+            padding: 0;
+        }
+        
+        .task-item {
+            display: flex;
+            align-items: center;
+            padding: 15px 20px;
+            border-bottom: 1px solid #f8f9fa;
+            transition: background-color 0.2s ease;
+        }
+        
+        .task-item:last-child {
+            border-bottom: none;
+        }
+        
+        .task-item:hover {
+            background-color: #f8f9fa;
+        }
+        
+        .task-item.completed {
+            background-color: #d4edda;
+            opacity: 0.8;
+        }
+        
+        .task-checkbox {
+            width: 20px;
+            height: 20px;
+            margin-right: 15px;
+            cursor: pointer;
+            transform: scale(1.2);
+        }
+        
+        .task-details {
+            flex: 1;
+            display: grid;
+            grid-template-columns: 1fr 1fr 2fr 1fr 2fr;
+            gap: 15px;
+            align-items: center;
+        }
+        
+        .task-time {
+            font-weight: bold;
+            color: #fd7e14;
+        }
+        
+        .task-activity {
+            font-weight: 600;
+            color: #495057;
+        }
+        
+        .task-mode {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 0.8em;
+            font-weight: bold;
+        }
+        
+        .mode-aerobic {
+            background: #d4edda;
+            color: #155724;
+        }
+        
+        .mode-strength {
+            background: #fff3cd;
+            color: #856404;
+        }
+        
+        .mode-stretch {
+            background: #f8d7da;
+            color: #721c24;
+        }
+        
+        .mode-none {
+            background: #e2e3e5;
+            color: #6c757d;
+        }
+        
+        .task-point {
+            font-size: 0.9em;
+            color: #6c757d;
+        }
+        
+        .completed .task-details {
+            text-decoration: line-through;
+        }
+        
+        @media (max-width: 768px) {
+            .controls {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .task-details {
+                grid-template-columns: 1fr;
+                gap: 5px;
+            }
+            
+            .task-item {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .task-checkbox {
+                margin-bottom: 10px;
+            }
+        }
+        
+        .stats {
+            background: #f8f9fa;
             padding: 20px;
+            margin-top: 30px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        
+        .stats h3 {
+            margin-top: 0;
+            color: #495057;
+        }
+        
+        .stat-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .stat-item {
+            background: white;
+            padding: 15px;
             border-radius: 8px;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
         
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 20px 0;
-        }
-        
-        th {
-            background-color: #4CAF50;
-            color: white;
-            padding: 12px;
-            text-align: left;
+        .stat-value {
+            font-size: 2em;
             font-weight: bold;
-            border: 1px solid #ddd;
+            color: #4CAF50;
         }
         
-        td {
-            padding: 10px;
-            border: 1px solid #ddd;
-            vertical-align: top;
-        }
-        
-        tr:nth-child(even) {
-            background-color: #f9f9f9;
-        }
-        
-        tr:hover {
-            background-color: #f5f5f5;
-        }
-        
-        .weekday {
-            font-weight: bold;
-            color: #2196F3;
-        }
-        
-        .time {
-            font-weight: bold;
-            color: #FF9800;
-        }
-        
-        .mode-aerobic {
-            background-color: #e8f5e8;
-            color: #2e7d32;
-            padding: 2px 6px;
-            border-radius: 4px;
+        .stat-label {
+            color: #6c757d;
             font-size: 0.9em;
-        }
-        
-        .mode-strength {
-            background-color: #fff3e0;
-            color: #f57c00;
-            padding: 2px 6px;
-            border-radius: 4px;
-            font-size: 0.9em;
-        }
-        
-        .mode-stretch {
-            background-color: #fce4ec;
-            color: #c2185b;
-            padding: 2px 6px;
-            border-radius: 4px;
-            font-size: 0.9em;
-        }
-        
-        .mode-none {
-            color: #666;
-            font-style: italic;
-        }
-        
-        .point {
-            font-size: 0.9em;
-            color: #555;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>1週間のリングフィット運動計画タイムテーブル</h1>
+        <div class="header">
+            <h1>🏋️ リングフィット タスク管理</h1>
+            <p>日々の運動計画を管理して、健康的な習慣を身につけよう！</p>
+        </div>
         
-        <table>
-            <thead>
-                <tr>
-                    <th>曜日</th>
-                    <th>時間帯</th>
-                    <th>活動内容</th>
-                    <th>リングフィットモード</th>
-                    <th>ポイント</th>
-                </tr>
-            </thead>
-            <tbody>
-                <!-- 月曜日 -->
-                <tr>
-                    <td class="weekday">月</td>
-                    <td class="time">16:45-17:00</td>
-                    <td>仕事片付け</td>
-                    <td><span class="mode-none">なし</span></td>
-                    <td class="point">夕食前の準備</td>
-                </tr>
-                <tr>
-                    <td class="weekday">月</td>
-                    <td class="time">17:00-17:10</td>
-                    <td>着替え・水分補給</td>
-                    <td><span class="mode-none">なし</span></td>
-                    <td class="point">運動前の準備</td>
-                </tr>
-                <tr>
-                    <td class="weekday">月</td>
-                    <td class="time">17:10-17:40</td>
-                    <td>リングフィット有酸素モード</td>
-                    <td><span class="mode-aerobic">有酸素</span></td>
-                    <td class="point">アドベンチャー1-2ステージ（ジョギング多めルート）</td>
-                </tr>
-                <tr>
-                    <td class="weekday">月</td>
-                    <td class="time">17:40-17:45</td>
-                    <td>クールダウン</td>
-                    <td><span class="mode-none">なし</span></td>
-                    <td class="point">軽いストレッチ</td>
-                </tr>
-                <tr>
-                    <td class="weekday">月</td>
-                    <td class="time">17:45-18:30</td>
-                    <td>夕食</td>
-                    <td><span class="mode-none">なし</span></td>
-                    <td class="point">食前運動で食欲抑制</td>
-                </tr>
-                
-                <!-- 火曜日 -->
-                <tr>
-                    <td class="weekday">火</td>
-                    <td class="time">17:30-18:30</td>
-                    <td>夕食</td>
-                    <td><span class="mode-none">なし</span></td>
-                    <td class="point">食事タイム</td>
-                </tr>
-                <tr>
-                    <td class="weekday">火</td>
-                    <td class="time">18:30-19:45</td>
-                    <td>休憩・消化タイム</td>
-                    <td><span class="mode-none">なし</span></td>
-                    <td class="point">食後1時間以上空ける</td>
-                </tr>
-                <tr>
-                    <td class="weekday">火</td>
-                    <td class="time">19:45-19:55</td>
-                    <td>着替え・水分補給</td>
-                    <td><span class="mode-none">なし</span></td>
-                    <td class="point">運動前の準備</td>
-                </tr>
-                <tr>
-                    <td class="weekday">火</td>
-                    <td class="time">19:55-20:25</td>
-                    <td>リングフィット筋トレモード</td>
-                    <td><span class="mode-strength">筋トレ</span></td>
-                    <td class="point">スクワット/バンザイプッシュ/プランク/腹筋ガード各2セット</td>
-                </tr>
-                <tr>
-                    <td class="weekday">火</td>
-                    <td class="time">20:25-20:30</td>
-                    <td>クールダウン</td>
-                    <td><span class="mode-none">なし</span></td>
-                    <td class="point">軽いストレッチ</td>
-                </tr>
-                
-                <!-- 水曜日 -->
-                <tr>
-                    <td class="weekday">水</td>
-                    <td class="time">16:45-17:00</td>
-                    <td>仕事片付け</td>
-                    <td><span class="mode-none">なし</span></td>
-                    <td class="point">夕食前の準備</td>
-                </tr>
-                <tr>
-                    <td class="weekday">水</td>
-                    <td class="time">17:00-17:10</td>
-                    <td>着替え・水分補給</td>
-                    <td><span class="mode-none">なし</span></td>
-                    <td class="point">運動前の準備</td>
-                </tr>
-                <tr>
-                    <td class="weekday">水</td>
-                    <td class="time">17:10-17:40</td>
-                    <td>リングフィット有酸素モード</td>
-                    <td><span class="mode-aerobic">有酸素</span></td>
-                    <td class="point">アドベンチャー1-2ステージ（ジョギング多めルート）</td>
-                </tr>
-                <tr>
-                    <td class="weekday">水</td>
-                    <td class="time">17:40-17:45</td>
-                    <td>クールダウン</td>
-                    <td><span class="mode-none">なし</span></td>
-                    <td class="point">軽いストレッチ</td>
-                </tr>
-                <tr>
-                    <td class="weekday">水</td>
-                    <td class="time">17:45-18:30</td>
-                    <td>夕食</td>
-                    <td><span class="mode-none">なし</span></td>
-                    <td class="point">食前運動で食欲抑制</td>
-                </tr>
-                
-                <!-- 木曜日 -->
-                <tr>
-                    <td class="weekday">木</td>
-                    <td class="time">17:30-18:30</td>
-                    <td>夕食</td>
-                    <td><span class="mode-none">なし</span></td>
-                    <td class="point">食事タイム</td>
-                </tr>
-                <tr>
-                    <td class="weekday">木</td>
-                    <td class="time">18:30-19:45</td>
-                    <td>休憩・消化タイム</td>
-                    <td><span class="mode-none">なし</span></td>
-                    <td class="point">食後1時間以上空ける</td>
-                </tr>
-                <tr>
-                    <td class="weekday">木</td>
-                    <td class="time">19:45-19:55</td>
-                    <td>着替え・水分補給</td>
-                    <td><span class="mode-none">なし</span></td>
-                    <td class="point">運動前の準備</td>
-                </tr>
-                <tr>
-                    <td class="weekday">木</td>
-                    <td class="time">19:55-20:25</td>
-                    <td>リングフィット筋トレモード</td>
-                    <td><span class="mode-strength">筋トレ</span></td>
-                    <td class="point">スクワット/バンザイプッシュ/プランク/腹筋ガード各2セット</td>
-                </tr>
-                <tr>
-                    <td class="weekday">木</td>
-                    <td class="time">20:25-20:30</td>
-                    <td>クールダウン</td>
-                    <td><span class="mode-none">なし</span></td>
-                    <td class="point">軽いストレッチ</td>
-                </tr>
-                
-                <!-- 金曜日 -->
-                <tr>
-                    <td class="weekday">金</td>
-                    <td class="time">16:45-17:00</td>
-                    <td>仕事片付け</td>
-                    <td><span class="mode-none">なし</span></td>
-                    <td class="point">夕食前の準備</td>
-                </tr>
-                <tr>
-                    <td class="weekday">金</td>
-                    <td class="time">17:00-17:10</td>
-                    <td>着替え・水分補給</td>
-                    <td><span class="mode-none">なし</span></td>
-                    <td class="point">運動前の準備</td>
-                </tr>
-                <tr>
-                    <td class="weekday">金</td>
-                    <td class="time">17:10-17:40</td>
-                    <td>リングフィット有酸素モード</td>
-                    <td><span class="mode-aerobic">有酸素</span></td>
-                    <td class="point">アドベンチャー1-2ステージ（ジョギング多めルート）</td>
-                </tr>
-                <tr>
-                    <td class="weekday">金</td>
-                    <td class="time">17:40-17:45</td>
-                    <td>クールダウン</td>
-                    <td><span class="mode-none">なし</span></td>
-                    <td class="point">軽いストレッチ</td>
-                </tr>
-                <tr>
-                    <td class="weekday">金</td>
-                    <td class="time">17:45-18:30</td>
-                    <td>夕食</td>
-                    <td><span class="mode-none">なし</span></td>
-                    <td class="point">食前運動で食欲抑制</td>
-                </tr>
-                
-                <!-- 土曜日 -->
-                <tr>
-                    <td class="weekday">土</td>
-                    <td class="time">好きな時間</td>
-                    <td>5分ストレッチ</td>
-                    <td><span class="mode-stretch">ストレッチ</span></td>
-                    <td class="point">上体伸ばし、体側、前屈、キャット＆カウ、太もも、リングコン胸開き</td>
-                </tr>
-                
-                <!-- 日曜日 -->
-                <tr>
-                    <td class="weekday">日</td>
-                    <td class="time">なし</td>
-                    <td>休養日</td>
-                    <td><span class="mode-none">なし</span></td>
-                    <td class="point">完全オフ</td>
-                </tr>
-            </tbody>
-        </table>
+        <div class="controls">
+            <div class="progress-bar">
+                <label>今日の進捗</label>
+                <div class="progress">
+                    <div class="progress-fill" id="dailyProgress"></div>
+                    <div class="progress-text" id="dailyProgressText">0%</div>
+                </div>
+            </div>
+            <div class="buttons">
+                <button class="btn btn-reset" onclick="resetDailyTasks()">今日をリセット</button>
+                <button class="btn btn-week-reset" onclick="resetWeeklyTasks()">週をリセット</button>
+            </div>
+        </div>
+        
+        <div class="content">
+            <div id="taskContainer"></div>
+            
+            <div class="stats">
+                <h3>📊 統計情報</h3>
+                <div class="stat-grid">
+                    <div class="stat-item">
+                        <div class="stat-value" id="todayCompletedCount">0</div>
+                        <div class="stat-label">今日完了</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="weekCompletedCount">0</div>
+                        <div class="stat-label">今週完了</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="weeklyCompletionRate">0%</div>
+                        <div class="stat-label">週間達成率</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="totalTasks">0</div>
+                        <div class="stat-label">総タスク数</div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
+
+    <script>
+        // タスクデータ
+        const taskData = [
+            // 月曜日
+            { day: '月', time: '16:45-17:00', activity: '仕事片付け', mode: 'none', point: '夕食前の準備' },
+            { day: '月', time: '17:00-17:10', activity: '着替え・水分補給', mode: 'none', point: '運動前の準備' },
+            { day: '月', time: '17:10-17:40', activity: 'リングフィット有酸素モード', mode: 'aerobic', point: 'アドベンチャー1-2ステージ（ジョギング多めルート）' },
+            { day: '月', time: '17:40-17:45', activity: 'クールダウン', mode: 'none', point: '軽いストレッチ' },
+            { day: '月', time: '17:45-18:30', activity: '夕食', mode: 'none', point: '食前運動で食欲抑制' },
+            
+            // 火曜日
+            { day: '火', time: '17:30-18:30', activity: '夕食', mode: 'none', point: '食事タイム' },
+            { day: '火', time: '18:30-19:45', activity: '休憩・消化タイム', mode: 'none', point: '食後1時間以上空ける' },
+            { day: '火', time: '19:45-19:55', activity: '着替え・水分補給', mode: 'none', point: '運動前の準備' },
+            { day: '火', time: '19:55-20:25', activity: 'リングフィット筋トレモード', mode: 'strength', point: 'スクワット/バンザイプッシュ/プランク/腹筋ガード各2セット' },
+            { day: '火', time: '20:25-20:30', activity: 'クールダウン', mode: 'none', point: '軽いストレッチ' },
+            
+            // 水曜日
+            { day: '水', time: '16:45-17:00', activity: '仕事片付け', mode: 'none', point: '夕食前の準備' },
+            { day: '水', time: '17:00-17:10', activity: '着替え・水分補給', mode: 'none', point: '運動前の準備' },
+            { day: '水', time: '17:10-17:40', activity: 'リングフィット有酸素モード', mode: 'aerobic', point: 'アドベンチャー1-2ステージ（ジョギング多めルート）' },
+            { day: '水', time: '17:40-17:45', activity: 'クールダウン', mode: 'none', point: '軽いストレッチ' },
+            { day: '水', time: '17:45-18:30', activity: '夕食', mode: 'none', point: '食前運動で食欲抑制' },
+            
+            // 木曜日
+            { day: '木', time: '17:30-18:30', activity: '夕食', mode: 'none', point: '食事タイム' },
+            { day: '木', time: '18:30-19:45', activity: '休憩・消化タイム', mode: 'none', point: '食後1時間以上空ける' },
+            { day: '木', time: '19:45-19:55', activity: '着替え・水分補給', mode: 'none', point: '運動前の準備' },
+            { day: '木', time: '19:55-20:25', activity: 'リングフィット筋トレモード', mode: 'strength', point: 'スクワット/バンザイプッシュ/プランク/腹筋ガード各2セット' },
+            { day: '木', time: '20:25-20:30', activity: 'クールダウン', mode: 'none', point: '軽いストレッチ' },
+            
+            // 金曜日
+            { day: '金', time: '16:45-17:00', activity: '仕事片付け', mode: 'none', point: '夕食前の準備' },
+            { day: '金', time: '17:00-17:10', activity: '着替え・水分補給', mode: 'none', point: '運動前の準備' },
+            { day: '金', time: '17:10-17:40', activity: 'リングフィット有酸素モード', mode: 'aerobic', point: 'アドベンチャー1-2ステージ（ジョギング多めルート）' },
+            { day: '金', time: '17:40-17:45', activity: 'クールダウン', mode: 'none', point: '軽いストレッチ' },
+            { day: '金', time: '17:45-18:30', activity: '夕食', mode: 'none', point: '食前運動で食欲抑制' },
+            
+            // 土曜日
+            { day: '土', time: '好きな時間', activity: '5分ストレッチ', mode: 'stretch', point: '上体伸ばし、体側、前屈、キャット＆カウ、太もも、リングコン胸開き' },
+            
+            // 日曜日
+            { day: '日', time: 'なし', activity: '休養日', mode: 'none', point: '完全オフ' }
+        ];
+
+        // ローカルストレージキー
+        const STORAGE_KEY = 'ringfit_tasks';
+        const STORAGE_DATE_KEY = 'ringfit_last_date';
+
+        // 現在の日付を取得
+        function getCurrentDate() {
+            return new Date().toDateString();
+        }
+
+        // 現在の週の開始日を取得（月曜日）
+        function getWeekStartDate() {
+            const today = new Date();
+            const day = today.getDay();
+            const diff = today.getDate() - day + (day === 0 ? -6 : 1);
+            return new Date(today.setDate(diff)).toDateString();
+        }
+
+        // タスクの完了状態を保存
+        function saveTaskState() {
+            const completedTasks = {};
+            document.querySelectorAll('.task-checkbox').forEach((checkbox, index) => {
+                completedTasks[index] = checkbox.checked;
+            });
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(completedTasks));
+            localStorage.setItem(STORAGE_DATE_KEY, getCurrentDate());
+        }
+
+        // タスクの完了状態を読み込み
+        function loadTaskState() {
+            const lastDate = localStorage.getItem(STORAGE_DATE_KEY);
+            const currentDate = getCurrentDate();
+            
+            // 日付が変わった場合は今日のタスクをリセット
+            if (lastDate !== currentDate) {
+                resetDailyTasksInternal();
+                return {};
+            }
+            
+            const saved = localStorage.getItem(STORAGE_KEY);
+            return saved ? JSON.parse(saved) : {};
+        }
+
+        // 今日の曜日を取得
+        function getTodayDayName() {
+            const days = ['日', '月', '火', '水', '木', '金', '土'];
+            return days[new Date().getDay()];
+        }
+
+        // モードのクラス名を取得
+        function getModeClass(mode) {
+            const modeMap = {
+                'aerobic': 'mode-aerobic',
+                'strength': 'mode-strength',
+                'stretch': 'mode-stretch',
+                'none': 'mode-none'
+            };
+            return modeMap[mode] || 'mode-none';
+        }
+
+        // モードの表示名を取得
+        function getModeDisplayName(mode) {
+            const modeMap = {
+                'aerobic': '有酸素',
+                'strength': '筋トレ',
+                'stretch': 'ストレッチ',
+                'none': 'なし'
+            };
+            return modeMap[mode] || 'なし';
+        }
+
+        // タスクを日別にグループ化
+        function groupTasksByDay() {
+            const grouped = {};
+            taskData.forEach((task, index) => {
+                if (!grouped[task.day]) {
+                    grouped[task.day] = [];
+                }
+                grouped[task.day].push({ ...task, index });
+            });
+            return grouped;
+        }
+
+        // タスクリストを描画
+        function renderTasks() {
+            const container = document.getElementById('taskContainer');
+            const groupedTasks = groupTasksByDay();
+            const completedTasks = loadTaskState();
+            const todayDayName = getTodayDayName();
+            
+            container.innerHTML = '';
+            
+            Object.keys(groupedTasks).forEach(day => {
+                const isToday = day === todayDayName;
+                const dayTasks = groupedTasks[day];
+                const completedInDay = dayTasks.filter(task => completedTasks[task.index]).length;
+                const progressPercent = Math.round((completedInDay / dayTasks.length) * 100);
+                
+                const daySection = document.createElement('div');
+                daySection.className = `day-section ${isToday ? 'today' : ''}`;
+                
+                daySection.innerHTML = `
+                    <div class="day-header" style="${isToday ? 'background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);' : ''}">
+                        <div class="day-title">${day}曜日 ${isToday ? '(今日)' : ''}</div>
+                        <div class="day-progress">${completedInDay}/${dayTasks.length} (${progressPercent}%)</div>
+                    </div>
+                    <div class="task-list">
+                        ${dayTasks.map(task => `
+                            <div class="task-item ${completedTasks[task.index] ? 'completed' : ''}">
+                                <input type="checkbox" class="task-checkbox" data-index="${task.index}" 
+                                       ${completedTasks[task.index] ? 'checked' : ''}>
+                                <div class="task-details">
+                                    <div class="task-time">${task.time}</div>
+                                    <div class="task-activity">${task.activity}</div>
+                                    <div class="task-mode ${getModeClass(task.mode)}">${getModeDisplayName(task.mode)}</div>
+                                    <div class="task-point">${task.point}</div>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+                
+                container.appendChild(daySection);
+            });
+            
+            // チェックボックスのイベントリスナーを追加
+            document.querySelectorAll('.task-checkbox').forEach(checkbox => {
+                checkbox.addEventListener('change', () => {
+                    const taskItem = checkbox.closest('.task-item');
+                    if (checkbox.checked) {
+                        taskItem.classList.add('completed');
+                    } else {
+                        taskItem.classList.remove('completed');
+                    }
+                    saveTaskState();
+                    updateProgress();
+                    updateStats();
+                });
+            });
+        }
+
+        // 進捗バーを更新
+        function updateProgress() {
+            const todayDayName = getTodayDayName();
+            const todayTasks = taskData.filter(task => task.day === todayDayName);
+            const completedTasks = loadTaskState();
+            const todayCompleted = todayTasks.filter((task, index) => {
+                const globalIndex = taskData.indexOf(task);
+                return completedTasks[globalIndex];
+            }).length;
+            
+            const progressPercent = todayTasks.length > 0 ? Math.round((todayCompleted / todayTasks.length) * 100) : 0;
+            
+            const progressFill = document.getElementById('dailyProgress');
+            const progressText = document.getElementById('dailyProgressText');
+            
+            progressFill.style.width = `${progressPercent}%`;
+            progressText.textContent = `${progressPercent}% (${todayCompleted}/${todayTasks.length})`;
+        }
+
+        // 統計情報を更新
+        function updateStats() {
+            const completedTasks = loadTaskState();
+            const todayDayName = getTodayDayName();
+            
+            // 今日完了したタスク数
+            const todayTasks = taskData.filter(task => task.day === todayDayName);
+            const todayCompleted = todayTasks.filter((task, index) => {
+                const globalIndex = taskData.indexOf(task);
+                return completedTasks[globalIndex];
+            }).length;
+            
+            // 今週完了したタスク数
+            const weekCompleted = Object.values(completedTasks).filter(Boolean).length;
+            
+            // 週間達成率
+            const weeklyCompletionRate = Math.round((weekCompleted / taskData.length) * 100);
+            
+            document.getElementById('todayCompletedCount').textContent = todayCompleted;
+            document.getElementById('weekCompletedCount').textContent = weekCompleted;
+            document.getElementById('weeklyCompletionRate').textContent = `${weeklyCompletionRate}%`;
+            document.getElementById('totalTasks').textContent = taskData.length;
+        }
+
+        // 今日のタスクをリセット（内部関数）
+        function resetDailyTasksInternal() {
+            const todayDayName = getTodayDayName();
+            const completedTasks = loadTaskState();
+            
+            taskData.forEach((task, index) => {
+                if (task.day === todayDayName) {
+                    completedTasks[index] = false;
+                }
+            });
+            
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(completedTasks));
+            localStorage.setItem(STORAGE_DATE_KEY, getCurrentDate());
+        }
+
+        // 今日のタスクをリセット（ユーザー操作）
+        function resetDailyTasks() {
+            if (confirm('今日のタスクをすべてリセットしますか？')) {
+                resetDailyTasksInternal();
+                renderTasks();
+                updateProgress();
+                updateStats();
+            }
+        }
+
+        // 週のタスクをリセット
+        function resetWeeklyTasks() {
+            if (confirm('今週のタスクをすべてリセットしますか？')) {
+                localStorage.removeItem(STORAGE_KEY);
+                localStorage.removeItem(STORAGE_DATE_KEY);
+                renderTasks();
+                updateProgress();
+                updateStats();
+            }
+        }
+
+        // 初期化
+        function init() {
+            renderTasks();
+            updateProgress();
+            updateStats();
+        }
+
+        // ページ読み込み時に初期化
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
 </body>
 </html>
