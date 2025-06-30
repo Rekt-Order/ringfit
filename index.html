@@ -480,10 +480,12 @@
             const completedTasks = loadTaskState();
             const todayDayName = getTodayDayName();
             
+            console.log('Today:', todayDayName, 'Grouped tasks:', groupedTasks);
+            
             container.innerHTML = '';
             
-            // 今日を最初に表示
-            const dayOrder = [todayDayName, ...Object.keys(groupedTasks).filter(day => day !== todayDayName)];
+            // 曜日の順序を固定
+            const dayOrder = ['月', '火', '水', '木', '金', '土', '日'];
             
             dayOrder.forEach(day => {
                 if (!groupedTasks[day]) return;
